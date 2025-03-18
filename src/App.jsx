@@ -73,13 +73,27 @@ const App = () => {
 
             {/* Weather Summary */}
 
-            <div className="weather-summary">sunny </div>
+            <div className="weather-summary">
+              {weatherData?.list?.[0]?.weather?.[0]?.description || "Loading..."}
+            </div>
 
             {/* Display temperature */}
 
-            <div className="temperature">24</div>
+            <div className="temperature">
+              {weatherData ? Math.round(weatherData.list[0].main.temp) + "°C" : "Loading..."}
+            </div>
 
-            <input placeholder='Enter City Name' />
+            {/* City Input Form */}
+
+            <form onSubmit={handleFormSubmit}>
+              <input 
+              type="text"
+              placeholder="Enter City Name"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              />
+              <button type="Submit">Search</button>
+            </form>
 
             <div className="date-box">
               <div>Day</div>
