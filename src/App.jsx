@@ -4,16 +4,13 @@ import { House, Cloudy, CloudSun, CloudRain, CloudSunRain, Wind, CloudMoon, Sun,
 
 
 const App = () => {
-
   const [city, setCity] = useState("Kathmandu")
   const [weatherData, setWeatherData] = useState(null)
   const [error, setError] = useState(null)
-  const [temperature, setTemperature] = useState(null)
 
   const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
   // function to fetch weather data
-
   const fetchWeather = async () => {
     try {
       const response = await fetch(
@@ -32,19 +29,29 @@ const App = () => {
     }
   };
 
-  // fetch weather data for the default city on component mount
 
-  useEffect(() => {
-    fetchWeather();
-  }, []);
 
   // handel form submission
-
   const handleFormSubmit = (e) => {
     e.preventDefault();
     fetchWeather(city);
   };
 
+  // Function to format the Date and day
+  const days = {
+    0: "Sunday",
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday",
+  }
+
+  // fetch the weather data on initial render
+  useEffect(() => {
+    fetchWeather();
+  }, []);
 
   return (
     <div className="main-container">
@@ -84,25 +91,26 @@ const App = () => {
             </div>
 
             {/* City Input Form */}
-
-            <form onSubmit={handleFormSubmit}>
-              <input 
-              type="text"
-              placeholder="Enter City Name"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
+            <form id='form' onSubmit={handleFormSubmit}>
+              <input
+                type="text"
+                placeholder="Enter City Name"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
               />
               <button type="Submit">Search</button>
             </form>
 
             <div className="date-box">
-              <div>Day</div>
-              <div>Date</div>
+              <div>{days[new Date(weatherData?.list[0]?.dt_txt).getDay()]}, </div>
+              <div>{(weatherData?.list[0]?.dt_txt)?.split(" ")[0]}</div>
             </div>
 
-            <div className="city"> City Name</div>
+            <div className="city">{weatherData?.city?.name || ""}, {weatherData?.city?.country || ""}</div>
           </div>
         </div>
+
+        {/* forecase */}  
         <div className="forecast-container">
           <div className="forecast-header">
             <Cloudy size={30} strokeWidth={1} />
