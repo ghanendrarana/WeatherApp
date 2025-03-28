@@ -14,7 +14,7 @@ const App = () => {
   const fetchWeather = async () => {
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric&cnt=5`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric&cnt=7`
       );
       if (!response.ok) {
         throw new Error("City not found");
@@ -87,7 +87,7 @@ const App = () => {
             {/* Display temperature */}
 
             <div className="temperature">
-              {weatherData ? Math.round(weatherData.list[0].main.temp) + "°C" : "Loading..."}
+              {weatherData ? Math.round(weatherData.list[0].main.temp) + "°C" : " "}
             </div>
 
             {/* City Input Form */}
@@ -110,47 +110,33 @@ const App = () => {
           </div>
         </div>
 
-        {/* forecase */}  
+        {/* forecast */}
         <div className="forecast-container">
           <div className="forecast-header">
             <Cloudy size={30} strokeWidth={1} />
             <span>Forecast</span>
           </div>
           <div className="forecast-body">
-            <div className="forecast-day">
-              <CloudRain size={20} className="cloud-rain" />
-              <div>temperature</div>
-              <div>date</div>
+            {weatherData?.list
+            .filter((_, index) => index !==0)
+            .map((data, index) => (
+              <div key={data.dt_txt} className="forecast-data">
+                <div>
+                  {weatherData?.list?.[0]?.weather?.[0]?.description || "Loading..."}
+                </div>
+                <div>
+                  {Math.round(data.main.temp) + "°C"}
+                </div>
+              <div>
+                <div>{days[new Date(data.dt_txt).getDay()]}, </div>
+                <div>{(data.dt_txt)?.split(" ")[0]}</div>
+              </div>
             </div>
-            <div className="forecast-day">
-              <CloudSunRain size={20} className="cloud-sun-rain" />
-              <div>temperature</div>
-              <div>date</div>
-            </div>
-            <div className="forecast-day">
-              <Wind size={20} className="wind" />
-              <div>temperature</div>
-              <div>date</div>
-            </div>
-            <div className="forecast-day">
-              <CloudMoon size={20} className="cloud-moon" />
-              <div>temperature</div>
-              <div>date</div>
-            </div>
-            <div className="forecast-day">
-              <Sun size={20} className="sun" />
-              <div>temperature</div>
-              <div>date</div>
-            </div>
-            <div className="forecast-day">
-              <CloudRainWind size={20} className="cloud-rain-wind" />
-              <div>temperature</div>
-              <div>date</div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    </div >
+    </div>
+    </div>
   )
 
 }

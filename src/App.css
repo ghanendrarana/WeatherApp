@@ -177,13 +177,3 @@ input {
   width: 99%;
   gap: 2px;
 }
-
-.forecast-day {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 33%;
-  height: 50%;
-  color: white;
-}
