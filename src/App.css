@@ -171,9 +171,35 @@ input {
 .forecast-body {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   margin-top: 10px;
   padding: 5px;
   height: 47vh;
   width: 99%;
-  gap: 2px;
+  gap: 10px;
+}
+
+.forecast-body > .forecast-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 150px;
+}
+
+.forecast-body > .forecast-data> .temperature {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+
+.forecast-body > .forecast-data > .date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  gap: 4px;
+  color: white;
 }

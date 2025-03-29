@@ -118,24 +118,24 @@ const App = () => {
           </div>
           <div className="forecast-body">
             {weatherData?.list
-            .filter((_, index) => index !==0)
-            .map((data, index) => (
-              <div key={data.dt_txt} className="forecast-data">
-                <div>
-                  {weatherData?.list?.[0]?.weather?.[0]?.description || "Loading..."}
+              .filter((_, index) => index !== 0)
+              .map((data, index) => (
+                <div key={data.dt_txt} className="forecast-data">
+                  <div class="icon">
+                    {weatherData?.list?.[0]?.weather?.[0]?.description || "Loading..."}
+                  </div>
+                  <div class="temperature">
+                    {Math.round(data.main.temp) + "°C"}
+                  </div>
+                  <div class="date">
+                    <div>{days[new Date(data.dt_txt).getDay()]}, </div>
+                    <div>{(data.dt_txt)?.split(" ")[0]}</div>
+                  </div>
                 </div>
-                <div>
-                  {Math.round(data.main.temp) + "°C"}
-                </div>
-              <div>
-                <div>{days[new Date(data.dt_txt).getDay()]}, </div>
-                <div>{(data.dt_txt)?.split(" ")[0]}</div>
-              </div>
-            </div>
-          ))}
+              ))}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   )
 
