@@ -29,8 +29,6 @@ const App = () => {
     }
   };
 
-
-
   // handel form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -47,6 +45,7 @@ const App = () => {
     5: "Friday",
     6: "Saturday",
   }
+
 
   // fetch the weather data on initial render
   useEffect(() => {
@@ -77,7 +76,6 @@ const App = () => {
             <div className="weather-icon">
               <CloudSun className="icon" size={70} />
             </div>
-
             {/* Weather Summary */}
 
             <div className="weather-summary">
@@ -121,13 +119,13 @@ const App = () => {
               .filter((_, index) => index !== 0)
               .map((data, index) => (
                 <div key={data.dt_txt} className="forecast-data">
-                  <div class="icon">
-                    {weatherData?.list?.[0]?.weather?.[0]?.description || "Loading..."}
+                  <div className="icon">
+                   <img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Weather Icon"/>
                   </div>
-                  <div class="temperature">
+                  <div className="temperature">
                     {Math.round(data.main.temp) + "°C"}
                   </div>
-                  <div class="date">
+                  <div className="date">
                     <div>{days[new Date(data.dt_txt).getDay()]}, </div>
                     <div>{(data.dt_txt)?.split(" ")[0]}</div>
                   </div>
@@ -138,7 +136,6 @@ const App = () => {
       </div>
     </div>
   )
-
 }
 
 export default App
