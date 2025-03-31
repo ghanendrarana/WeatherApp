@@ -74,7 +74,7 @@ const App = () => {
 
           <div className="body">
             <div className="weather-icon">
-              <CloudSun className="icon" size={70} />
+             <img src={`https://openweathermap.org/img/wn/${weatherData?.list?.[0]?.weather?.[0]?.icon}@2x.png`} alt="Weather Icon"/>
             </div>
             {/* Weather Summary */}
 
