@@ -17,7 +17,7 @@ const App = () => {
         `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric&cnt=7`
       );
       if (!response.ok) {
-        throw new Error("City not found");
+        throw new Error("City not found");  
       }
       const data = await response.json();
       console.log(data);
@@ -28,6 +28,47 @@ const App = () => {
       setWeatherData(null);
     }
   };
+
+  // function to fetch weather data from by using coordinate
+
+  const fetchWeatherDataByCoords = async (lat, lon) => {
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&cnt=7`
+      );
+      if (!response.ok) {
+        throw new Error("Location not found");
+      }
+      const data = await response.json();
+      console.log(data);
+      setWeatherData(data);
+      setCity(data.city.name);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+      setWeatherData(null);
+    }
+  };
+
+  // Function to get the user's location
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          fetchWeatherDataByCoords( latitude, longitude );
+        },
+        (error) => {
+          console.error("Error getting location:", error)
+          setCity("Kathmandu");
+          fetchWeather("Kathmandu");
+        }
+      )
+    } else {
+      console.error("Geolocation is not supported");
+      fetchWeather("Kathmandu");
+    }
+  },[]);
 
   // handel form submission
   const handleFormSubmit = (e) => {
@@ -74,7 +115,7 @@ const App = () => {
 
           <div className="body">
             <div className="weather-icon">
-             <img src={`https://openweathermap.org/img/wn/${weatherData?.list?.[0]?.weather?.[0]?.icon}@2x.png`} alt="Weather Icon"/>
+              <img src={`https://openweathermap.org/img/wn/${weatherData?.list?.[0]?.weather?.[0]?.icon}@2x.png`} alt="Weather Icon" />
             </div>
             {/* Weather Summary */}
 
@@ -120,7 +161,7 @@ const App = () => {
               .map((data, index) => (
                 <div key={data.dt_txt} className="forecast-data">
                   <div className="icon">
-                   <img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Weather Icon"/>
+                    <img src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`} alt="Weather Icon" />
                   </div>
                   <div className="temperature">
                     {Math.round(data.main.temp) + "°C"}
