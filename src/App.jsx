@@ -147,7 +147,7 @@ const App = () => {
               <div>{(weatherData?.list[0]?.dt_txt)?.split(" ")[0]}</div>
             </div>
 
-            <div className="city">{weatherData?.city?.name || ""} {weatherData?.city?.country || ""}</div>
+            <div className="city">{weatherData?.city?.name || ""}, {weatherData?.city?.country || ""}</div>
           </div>
         </div>
 
