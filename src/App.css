@@ -117,15 +117,40 @@
   color: white;
 }
 
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
 input {
   align-items: end;
-  width: 60%;
-  height: 20px;
+  width: 70%;
+  height: 22px;
   border-radius: 5px;
   border: 1px solid white;
   padding: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  height: 20px;
+  margin-left: 3px;
+  background-color: transparent;
+  position: absolute;
+  right: 15%;
+}
+
+.search-icon {
+  color: black;
+  stroke-width: 2;
 }
 
 .date-box{
@@ -197,6 +222,7 @@ input {
 
 .forecast-body > .forecast-data > .date {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 14px;

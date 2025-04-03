@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import { House, Cloudy, CloudSun, CloudRain, CloudSunRain, Wind, CloudMoon, Sun, CloudRainWind } from 'lucide-react';
+import { House, Cloudy, Search } from 'lucide-react';
 
 
 const App = () => {
@@ -17,7 +17,7 @@ const App = () => {
         `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric&cnt=7`
       );
       if (!response.ok) {
-        throw new Error("City not found");  
+        throw new Error("City not found");
       }
       const data = await response.json();
       console.log(data);
@@ -56,7 +56,7 @@ const App = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          fetchWeatherDataByCoords( latitude, longitude );
+          fetchWeatherDataByCoords(latitude, longitude);
         },
         (error) => {
           console.error("Error getting location:", error)
@@ -68,7 +68,7 @@ const App = () => {
       console.error("Geolocation is not supported");
       fetchWeather("Kathmandu");
     }
-  },[]);
+  }, []);
 
   // handel form submission
   const handleFormSubmit = (e) => {
@@ -137,15 +137,17 @@ const App = () => {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               />
-              <button type="Submit">Search</button>
+              <button type="Submit">
+                <Search size={18} className="search-icon" />
+              </button>
             </form>
 
             <div className="date-box">
-              <div>{days[new Date(weatherData?.list[0]?.dt_txt).getDay()]}, </div>
+              <div>{days[new Date(weatherData?.list[0]?.dt_txt).getDay()]} </div>
               <div>{(weatherData?.list[0]?.dt_txt)?.split(" ")[0]}</div>
             </div>
 
-            <div className="city">{weatherData?.city?.name || ""}, {weatherData?.city?.country || ""}</div>
+            <div className="city">{weatherData?.city?.name || ""} {weatherData?.city?.country || ""}</div>
           </div>
         </div>
 
